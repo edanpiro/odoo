@@ -24,7 +24,7 @@ import binascii
 import netsvc
 
 class report_xml(osv.osv):
-    
+
     def _report_content_txt(self, cr, uid, ids, name, arg, context=None):
 	if context is None: context = {}
         res = {}
@@ -35,17 +35,18 @@ class report_xml(osv.osv):
         return res
 
     def _report_content_txt_inv(self, cr, uid, id, name, value, arg, context=None):
-	self.write(cr,uid,id,{'report_rml_content':str(value)},context=context)
-    
-    
+        val = value.encode("utf-8")
+        self.write(cr, uid, id, {'report_rml_content': val}, context=context)
+
+
     _name = 'ir.actions.report.xml'
     _inherit = 'ir.actions.report.xml'
     _columns = {
 	    'report_rml_content_txt': fields.function(_report_content_txt, fnct_inv=_report_content_txt_inv, method=True, type='text', string='RML text content'),
-	    
+
 	}
-	
-    
+
+
 report_xml()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
